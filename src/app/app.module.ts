@@ -11,6 +11,8 @@ import { FormsModule } from '@angular/forms';
 import { HttpClientModule } from '@angular/common/http';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { HeaderModule } from './views/header/header.module';
+import { provideFirebaseApp, getApp, initializeApp } from '@angular/fire/app';
+import { environment } from 'src/environments/environment';
 
 registerLocaleData(en);
 
@@ -25,6 +27,7 @@ registerLocaleData(en);
     HttpClientModule,
     BrowserAnimationsModule,
     HeaderModule,
+    provideFirebaseApp(() => initializeApp(environment.firebaseConfig)),
   ],
   providers: [
     { provide: NZ_I18N, useValue: en_US }
