@@ -2,11 +2,11 @@ import { Component, Input, OnInit } from '@angular/core';
 import { ProductInterface } from 'src/app/shared/interfaces/product.interface';
 
 @Component({
-  selector: 'app-products-table',
-  templateUrl: './products-table.component.html',
-  styleUrls: ['./products-table.component.scss'],
+  selector: 'app-product',
+  templateUrl: './product.component.html',
+  styleUrls: ['./product.component.scss'],
 })
-export class ProductsTableComponent implements OnInit {
+export class ProductComponent implements OnInit {
   @Input() set numberSpan(quantity: number) {
     if (quantity) {
       this.spanNumber = quantity;

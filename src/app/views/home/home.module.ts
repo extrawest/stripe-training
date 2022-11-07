@@ -6,7 +6,7 @@ import { NzMenuModule } from 'ng-zorro-antd/menu';
 import { RouterModule, Routes } from '@angular/router';
 import { NzLayoutModule } from 'ng-zorro-antd/layout';
 import { NzCardModule } from 'ng-zorro-antd/card';
-import { ProductsTableComponent } from './components/products-table/products-table/products-table.component';
+import { ProductComponent } from './components/products-table/product/product.component';
 import { NzTableModule } from 'ng-zorro-antd/table';
 import { NzSpaceModule } from 'ng-zorro-antd/space';
 
@@ -18,7 +18,7 @@ const routes: Routes = [
 ];
 
 @NgModule({
-  declarations: [HomeComponent, ProductsTableComponent],
+  declarations: [HomeComponent, ProductComponent],
   imports: [
     CommonModule,
     RouterModule.forChild(routes),
