@@ -1,0 +1,52 @@
+<nz-card *ngIf="spanNumber === 24; else smallCard" class="card-margin">
+  <div nz-row>
+    <div nz-col nzSpan="6">
+      <img
+        [src]="product.image"
+        [ngStyle]="{ height: '200px', width: '150px' }"
+      />
+    </div>
+    <div nz-col nzSpan="18">
+      <div [ngStyle]="{ height: '30px' }">{{ product.category }}</div>
+      <div [ngStyle]="{ height: '30px' }">{{ product.title }}</div>
+      <div [ngStyle]="{ height: '50px' }">{{ product.description }}</div>
+      <div nz-row [ngStyle]="{ 'margin-top': '60px' }">
+        <div nz-col nzSpan="22" [ngStyle]="{ color: 'red' }">
+          ${{ product.price }}
+        </div>
+        <div nz-col nzSpan="2">
+          <img
+            src="./../../../../../assets/icons/cart-icon.png"
+            class="icon"
+            srcset=""
+          />
+        </div>
+      </div>
+    </div>
+  </div>
+</nz-card>
+
+<ng-template #smallCard>
+  <div class="card">
+    <img
+      [src]="product.image"
+      [ngStyle]="{ height: '200px', width: '150px' }"
+    />
+    <div>{{ product.category }}</div>
+    <div [ngStyle]="{ 'text-align': 'center', height: '50px' }">
+      {{ product.title }}
+    </div>
+    <div [ngStyle]="{ width: '100%', display: 'flex', 'margin-top': '40px' }">
+      <div nz-col nzSpan="22" [ngStyle]="{ color: 'red' }">
+        ${{ product.price }}
+      </div>
+      <div nz-col nzSpan="2">
+        <img
+          src="./../../../../../assets/icons/cart-icon.png"
+          class="icon"
+          srcset=""
+        />
+      </div>
+    </div>
+  </div>
+</ng-template>
