@@ -1,1 +1,28 @@
-<p>cart works!</p>
+<div nz-row>
+  <nz-table #basicTable [nzData]="products">
+    <thead>
+      <tr>
+        <th>Product</th>
+        <th>Name</th>
+        <th>Price</th>
+        <th>Quantity</th>
+        <th>Total</th>
+        <th>
+          <button nz-button nzType="primary" nzDanger>Clear all</button>
+        </th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let data of basicTable.data">
+        <td>
+          <span
+            nz-icon
+            nzType="close-circle"
+            nzTheme="fill"
+            [ngStyle]="{ color: 'red', 'font-size': '20px' }"
+          ></span>
+        </td>
+      </tr>
+    </tbody>
+  </nz-table>
+</div>
