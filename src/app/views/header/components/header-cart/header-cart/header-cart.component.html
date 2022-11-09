@@ -1,0 +1,37 @@
+<div class="cart">
+  <div nz-row>
+    <div nz-col nzSpan="16">{{ numberOfItems }} Items</div>
+    <div nz-col nzSpan="8">View cart</div>
+  </div>
+  <nz-divider></nz-divider>
+  <div>
+    <div
+      class="cart-item"
+      *ngFor="let product of selectedProducts; let i = index"
+    >
+      <div class="cart-item-title">{{ product.title }}</div>
+      <div class="cart-item-price">${{ product.price }}</div>
+    </div>
+  </div>
+  <nz-divider></nz-divider>
+  <div nz-row>
+    <div nz-col nzSpan="16">Total</div>
+    <div nz-col nzSpan="8" class="cart-item-price">$ {{ totalSum }}</div>
+  </div>
+  <nz-divider></nz-divider>
+  <div nz-row>
+    <div nz-col nzSpan="20" class="pointer">
+      <img
+        (click)="removeAllProducts()"
+        src="./../../../../../assets/icons/red-cart-icon.png"
+        class="cart-icon"
+      />
+    </div>
+    <div nz-col nzSpan="4" routerLink="/cart" class="pointer">
+      <img
+        src="./../../../../../assets/icons/green-cart-icon.jpg"
+        class="cart-icon"
+      />
+    </div>
+  </div>
+</div>

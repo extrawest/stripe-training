@@ -9,6 +9,7 @@ import { NzCardModule } from 'ng-zorro-antd/card';
 import { ProductComponent } from './components/products-table/product/product.component';
 import { NzTableModule } from 'ng-zorro-antd/table';
 import { NzSpaceModule } from 'ng-zorro-antd/space';
+import { NzDividerModule } from 'ng-zorro-antd/divider';
 
 const routes: Routes = [
   {
@@ -28,6 +29,7 @@ const routes: Routes = [
     NzCardModule,
     NzTableModule,
     NzSpaceModule,
+    NzDividerModule
   ],
   exports: [HomeComponent],
 })

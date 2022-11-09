@@ -1,0 +1,36 @@
+.cart {
+  width: 200px;
+  min-height: 100px;
+  font-size: 14px;
+  padding: 10px;
+  color: black;
+  background-color: white;
+}
+
+.cart-icon {
+  width: 30px;
+  height: 30px;
+}
+
+.cart-item {
+  min-height: 20px;
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+}
+
+.cart-item-title {
+  width: 70%;
+  text-overflow: ellipsis;
+  word-wrap: break-word;
+}
+
+.cart-item-price {
+  width: 30%;
+  font-weight: bold;
+  text-align: end;
+}
+
+.pointer {
+  cursor: pointer;
+}
