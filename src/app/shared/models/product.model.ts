@@ -1,4 +1,4 @@
-export interface ProductInterface {
+export interface Product {
   id: number;
   title: string;
   category: string;
@@ -9,4 +9,5 @@ export interface ProductInterface {
     count: number;
     rate: number;
   };
+  quantity?: number;
 }

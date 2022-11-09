@@ -13,6 +13,8 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { HeaderModule } from './views/header/header.module';
 import { provideFirebaseApp, getApp, initializeApp } from '@angular/fire/app';
 import { environment } from 'src/environments/environment';
+import { ActionReducerMap, StoreModule } from '@ngrx/store';
+import { reducer } from './shared/reducers/product.reducer';
 
 registerLocaleData(en);
 
@@ -29,6 +31,9 @@ registerLocaleData(en);
     BrowserAnimationsModule,
     HeaderModule,
     provideFirebaseApp(() => initializeApp(environment.firebaseConfig)),
+    StoreModule.forRoot({
+       product: reducer
+    } as ActionReducerMap<any,any>)
   ],
   providers: [
     { provide: NZ_I18N, useValue: en_US }
