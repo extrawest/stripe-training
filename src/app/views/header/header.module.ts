@@ -10,6 +10,10 @@ import { NzIconModule } from 'ng-zorro-antd/icon';
 import { NzSpaceModule } from 'ng-zorro-antd/space';
 import { NzMenuModule } from 'ng-zorro-antd/menu';
 import { NzGridModule } from 'ng-zorro-antd/grid';
+import { NzDividerModule } from 'ng-zorro-antd/divider';
+import { HeaderCartComponent } from './components/header-cart/header-cart/header-cart.component';
+import { NzToolTipModule } from 'ng-zorro-antd/tooltip';
+import { NzElementPatchModule } from 'ng-zorro-antd/core/element-patch';
 
 const routes: Routes = [
   {
@@ -19,10 +23,7 @@ const routes: Routes = [
 ];
 
 @NgModule({
-  declarations: [
-    HeaderComponent,
-    ThemeSwitcherComponent
-  ],
+  declarations: [HeaderComponent, ThemeSwitcherComponent, HeaderCartComponent],
   imports: [
     CommonModule,
     NzSwitchModule,
@@ -32,8 +33,11 @@ const routes: Routes = [
     NzIconModule,
     NzSpaceModule,
     NzMenuModule,
-    NzGridModule
+    NzGridModule,
+    NzDividerModule,
+    NzToolTipModule,
+    NzElementPatchModule,
   ],
-  exports: [HeaderComponent]
+  exports: [HeaderComponent],
 })
-export class HeaderModule { }
+export class HeaderModule {}
