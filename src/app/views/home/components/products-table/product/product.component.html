@@ -14,7 +14,7 @@
         <div nz-col nzSpan="22" [ngStyle]="{ color: 'red' }">
           ${{ product.price }}
         </div>
-        <div nz-col nzSpan="2">
+        <div nz-col nzSpan="2" (click)="addProductToCart(product)" class="pointer">
           <img
             src="./../../../../../assets/icons/cart-icon.png"
             class="icon"
@@ -43,7 +43,7 @@
       <div nz-col nzSpan="2">
         <img
           src="./../../../../../assets/icons/cart-icon.png"
-          class="icon"
+          class="icon pointer"
           srcset=""
         />
       </div>
