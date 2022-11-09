@@ -3,6 +3,10 @@ import { ProductService } from 'src/app/shared/services/product.service';
 import { SortEnum } from 'src/app/shared/enums/sort.enum';
 import { ProductLimitEnum } from 'src/app/shared/enums/product-limit.enum';
 import { ProductInterface } from 'src/app/shared/interfaces/product.interface';
+import { Store } from '@ngrx/store';
+import { Product } from './../../../../shared/models/product.model';
+import { AppState } from './../../../../app.state';
+import * as ProductActions from './../../../../shared/actions/product.action';
 
 @Component({
   selector: 'app-home',
@@ -15,7 +19,10 @@ export class HomeComponent implements OnInit {
   productLimits: string[] = [];
   products: ProductInterface[] = [];
   nzSpan: number;
-  constructor(private productService: ProductService) {}
+  constructor(
+    private productService: ProductService,
+    private store: Store<AppState>
+  ) {}
 
   ngOnInit(): void {
     this.getCategories();
