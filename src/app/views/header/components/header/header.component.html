@@ -3,8 +3,19 @@
     <nz-page-header-extra>
       <nz-space nzSize="large">
         <app-theme-switcher></app-theme-switcher>
-        <img src="./../../../../../assets/icons/cart-icon.png" class="icon" routerLink="/cart">
+        <img
+          [nz-tooltip]="cart"
+          nzTooltipPlacement="bottomRight"
+          [ngStyle]="{ color: 'black' }"
+          [nzTooltipOverlayStyle]="{ border: 'none' }"
+          src="./../../../../../assets/icons/cart-icon.png"
+          class="icon"
+        />
       </nz-space>
     </nz-page-header-extra>
   </nz-page-header>
 </div>
+
+<ng-template #cart>
+  <app-header-cart></app-header-cart>
+</ng-template>
