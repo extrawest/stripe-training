@@ -8,16 +8,17 @@ import { ThemeEnum } from '../enums/theme.enum';
   providedIn: 'root',
 })
 export class LocalStorageService {
-    defaultTheme = 'light';
-    themeItem = 'theme';
-    isNull = (value: any) => value === null;
-    constructor() {}
+  defaultTheme = ThemeEnum.LIGHT;
+  themeItem = 'theme';
+  isNull = (value: any) => value === null;
+  constructor() {}
+
   /**
    * set value to local storage
    * @param key   - local storage key
    * @param value - setting value
    */
-   setValue(key: string, value: any): void {
+  setValue(key: string, value: any): void {
     localStorage.setItem(key, value);
   }
 
@@ -25,7 +26,7 @@ export class LocalStorageService {
    * get value from local storage
    * @param key - local storage key
    */
-   getValue(key: string): string | null {
+  getValue(key: string): string | null {
     return localStorage.getItem(key);
   }
 
@@ -33,7 +34,7 @@ export class LocalStorageService {
    * check if local storage has value
    * @param key - local storage key
    */
-   hasValue(key: string): boolean {
+  hasValue(key: string): boolean {
     return !this.isNull(localStorage.getItem(key));
   }
 
@@ -41,16 +42,15 @@ export class LocalStorageService {
    * remove key from local storage
    * @param key - local storage key
    */
-   removeValue(key: string): void {
+  removeValue(key: string): void {
     return localStorage.removeItem(key);
   }
-
 
   /**
    * set theme
    * @param theme - theme
    */
-   setTheme(theme: string): void {
+  setTheme(theme: string): void {
     localStorage.setItem(this.themeItem, JSON.stringify(theme));
   }
 
@@ -58,7 +58,9 @@ export class LocalStorageService {
    * get theme
    */
   getTheme(): ThemeEnum {
-    return this.hasThemeValue() ? JSON.parse(this.getValue(this.themeItem) || this.defaultTheme) : null;
+    return this.hasThemeValue()
+      ? JSON.parse(this.getValue(this.themeItem) || this.defaultTheme)
+      : null;
   }
 
   /**

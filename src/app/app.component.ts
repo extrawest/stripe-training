@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
 import { ThemeService } from 'src/app/shared/services/theme.service';
 import { LocalStorageService } from 'src/app/shared/services/local-storage-service';
+import { ThemeEnum } from './shared/enums/theme.enum';
 
 @Component({
   selector: 'app-root',
@@ -8,7 +9,7 @@ import { LocalStorageService } from 'src/app/shared/services/local-storage-servi
   styleUrls: ['./app.component.scss'],
 })
 export class AppComponent {
-  defaultTheme = 'light';
+  defaultTheme = ThemeEnum.LIGHT;
   constructor(
     private localStorageService: LocalStorageService,
     private themeService: ThemeService
