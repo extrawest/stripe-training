@@ -13,15 +13,14 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { HeaderModule } from './views/header/header.module';
 import { provideFirebaseApp, getApp, initializeApp } from '@angular/fire/app';
 import { environment } from 'src/environments/environment';
-import { ActionReducerMap, StoreModule } from '@ngrx/store';
-import { reducer } from './shared/reducers/product.reducer';
+import { StoreModule } from '@ngrx/store';
+import { cartReducer } from './shared/store/reducers/product.reducer';
+import { StoreDevtoolsModule } from '@ngrx/store-devtools';
 
 registerLocaleData(en);
 
 @NgModule({
-  declarations: [
-    AppComponent
-  ],
+  declarations: [AppComponent],
   imports: [
     BrowserModule,
     AppRoutingModule,
@@ -32,12 +31,15 @@ registerLocaleData(en);
     HeaderModule,
     provideFirebaseApp(() => initializeApp(environment.firebaseConfig)),
     StoreModule.forRoot({
-       product: reducer
-    } as ActionReducerMap<any,any>)
+      cart: cartReducer,
+    }),
+    StoreDevtoolsModule.instrument({
+      maxAge: 25,
+      logOnly: environment.production,
+      autoPause: true,
+    }),
   ],
-  providers: [
-    { provide: NZ_I18N, useValue: en_US }
-  ],
-  bootstrap: [AppComponent]
+  providers: [{ provide: NZ_I18N, useValue: en_US }],
+  bootstrap: [AppComponent],
 })
-export class AppModule { }
+export class AppModule {}

@@ -1,5 +1,5 @@
-import { Product } from './shared/models/product.model';
+import { Product } from './shared/store/models/product.model';
 
 export interface AppState {
-  readonly products: Product[];
+  readonly cart: Product[];
 }
