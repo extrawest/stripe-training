@@ -1,10 +1,10 @@
 import { Component, OnInit } from '@angular/core';
 import * as ProductActions from '../../../../../shared/store/actions/cart.action';
 import { Store } from '@ngrx/store';
-import { Product } from '../../../../../shared/store/models/product.model';
 import { AppState } from './../../../../../app.state';
 import { first } from 'rxjs';
 import { selectFeatureCart } from './../../../../../shared/store/selectors/cart.selector';
+import { Cart } from 'src/app/shared/store/models/cart.model';
 
 @Component({
   selector: 'app-header-cart',
@@ -12,7 +12,7 @@ import { selectFeatureCart } from './../../../../../shared/store/selectors/cart.
   styleUrls: ['./header-cart.component.scss'],
 })
 export class HeaderCartComponent implements OnInit {
-  selectedProducts: Product[] = [];
+  selectedProducts: Cart[] = [];
   totalSum: number = 0;
   numberOfItems: number = 0;
   constructor(private store: Store<AppState>) {}
@@ -26,10 +26,10 @@ export class HeaderCartComponent implements OnInit {
       .select(selectFeatureCart)
       .pipe(first())
       .subscribe((data) => {
-        this.selectedProducts = data;
+       this.selectedProducts = data;
         this.numberOfItems = this.selectedProducts.length;
         this.selectedProducts.map((el) => {
-          this.totalSum += el.price;
+          this.totalSum += el.totalSum;
         });
       });
   }

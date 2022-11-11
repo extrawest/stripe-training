@@ -3,6 +3,7 @@ import { Store } from '@ngrx/store';
 import { AppState } from './../../../../app.state';
 import { Subject } from 'rxjs';
 import { selectFeatureCart } from './../../../../shared/store/selectors/cart.selector';
+import { Cart } from 'src/app/shared/store/models/cart.model';
 
 @Component({
   selector: 'app-header',
@@ -10,7 +11,7 @@ import { selectFeatureCart } from './../../../../shared/store/selectors/cart.sel
   styleUrls: ['./header.component.scss'],
 })
 export class HeaderComponent implements OnInit {
-  cartItems: number;
+  cartItems: number = 0;
   items$: Subject<number> = new Subject();
   constructor(private store: Store<AppState>) {}
 
@@ -19,8 +20,11 @@ export class HeaderComponent implements OnInit {
   }
 
   getCartItems() {
-    this.store.select(selectFeatureCart).subscribe((data) => {
-      this.cartItems = data.length;
+    this.store.select(selectFeatureCart).subscribe((data: Cart[]) => {
+      this.cartItems = 0;
+      data.map((el) => {
+        this.cartItems += el.quantity;
+      });
     });
   }
 }

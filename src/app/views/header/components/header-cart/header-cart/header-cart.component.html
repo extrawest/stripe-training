@@ -9,8 +9,8 @@
       class="cart-item"
       *ngFor="let product of selectedProducts; let i = index"
     >
-      <div class="cart-item-title">{{ product.title }}</div>
-      <div class="cart-item-price">${{ product.price }}</div>
+      <div class="cart-item-title">{{ product.product.title }} ( {{product.quantity}} )</div>
+      <div class="cart-item-price">${{ product.totalSum }}</div>
     </div>
   </div>
   <nz-divider></nz-divider>
