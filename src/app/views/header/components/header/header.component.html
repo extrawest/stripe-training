@@ -3,14 +3,16 @@
     <nz-page-header-extra>
       <nz-space nzSize="large">
         <app-theme-switcher></app-theme-switcher>
-        <img
-          [nz-tooltip]="cart"
-          nzTooltipPlacement="bottomRight"
-          [ngStyle]="{ color: 'black' }"
-          [nzTooltipOverlayStyle]="{ border: 'none' }"
-          src="./../../../../../assets/icons/cart-icon.png"
-          class="icon"
-        />
+        <nz-badge [nzCount]="cartItems">
+          <img
+            [nz-tooltip]="cart"
+            nzTooltipPlacement="bottomRight"
+            [ngStyle]="{ color: 'black' }"
+            [nzTooltipOverlayStyle]="{ border: 'none' }"
+            src="./../../../../../assets/icons/cart-icon.png"
+            class="icon"
+          />
+        </nz-badge>
       </nz-space>
     </nz-page-header-extra>
   </nz-page-header>

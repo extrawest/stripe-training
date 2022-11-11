@@ -14,6 +14,7 @@ import { NzDividerModule } from 'ng-zorro-antd/divider';
 import { HeaderCartComponent } from './components/header-cart/header-cart/header-cart.component';
 import { NzToolTipModule } from 'ng-zorro-antd/tooltip';
 import { NzElementPatchModule } from 'ng-zorro-antd/core/element-patch';
+import { NzBadgeModule } from 'ng-zorro-antd/badge';
 
 const routes: Routes = [
   {
@@ -37,6 +38,7 @@ const routes: Routes = [
     NzDividerModule,
     NzToolTipModule,
     NzElementPatchModule,
+    NzBadgeModule,
   ],
   exports: [HeaderComponent],
 })
