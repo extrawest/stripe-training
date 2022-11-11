@@ -14,7 +14,9 @@ import { HeaderModule } from './views/header/header.module';
 import { provideFirebaseApp, getApp, initializeApp } from '@angular/fire/app';
 import { environment } from 'src/environments/environment';
 import { StoreModule } from '@ngrx/store';
-import { cartReducer } from './shared/store/reducers/product.reducer';
+import { CartReducer } from './shared/store/reducers/cart.reducer';
+import { ProductsReducer } from './shared/store/reducers/products.reducer';
+import { SortedProductsReducer } from './shared/store/reducers/sorted-products.reducer';
 import { StoreDevtoolsModule } from '@ngrx/store-devtools';
 
 registerLocaleData(en);
@@ -31,7 +33,9 @@ registerLocaleData(en);
     HeaderModule,
     provideFirebaseApp(() => initializeApp(environment.firebaseConfig)),
     StoreModule.forRoot({
-      cart: cartReducer,
+      cart: CartReducer,
+      products: ProductsReducer,
+      sortedProducts: SortedProductsReducer,
     }),
     StoreDevtoolsModule.instrument({
       maxAge: 25,
