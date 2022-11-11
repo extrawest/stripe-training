@@ -22,16 +22,32 @@
     <tbody>
       <tr *ngFor="let data of basicTable.data; let i = index">
         <td>
-          <img [src]="data.image" alt="" [ngStyle]="{ width: '30px' }" />
+          <img
+            [src]="data.product.image"
+            alt=""
+            [ngStyle]="{ width: '30px' }"
+          />
         </td>
-        <td>{{ data.title }}</td>
-        <td>{{ data.price }}</td>
+        <td>{{ data.product.title }}</td>
+        <td>{{ data.product.price }}</td>
         <td>
-          <span nz-icon nzType="minus" nzTheme="outline" class="pointer"></span>
+          <span
+            nz-icon
+            nzType="minus"
+            nzTheme="outline"
+            class="pointer"
+            (click)="minusItem(data)"
+          ></span>
           <span>{{ data.quantity }}</span>
-          <span nz-icon nzType="plus" nzTheme="outline" class="pointer"></span>
+          <span
+            nz-icon
+            nzType="plus"
+            nzTheme="outline"
+            class="pointer"
+            (click)="plusItem(data)"
+          ></span>
         </td>
-        <td></td>
+        <td>{{ data.totalSum }}</td>
         <td>
           <span
             (click)="removeProduct(i)"
@@ -49,7 +65,7 @@
             Continue shopping
           </button>
         </td>
-        <td>Total</td>
+        <td>{{ totalSum }}</td>
         <td>
           <button nz-button nzType="default" routerLink="/home">
             Proceed to checkout

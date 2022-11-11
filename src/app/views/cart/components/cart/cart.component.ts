@@ -1,8 +1,13 @@
 import { Component, OnInit } from '@angular/core';
 import { Store } from '@ngrx/store';
-import { Product } from './../../../../shared/models/product.model';
 import { AppState } from './../../../../app.state';
-import * as ProductActions from './../../../../shared/actions/product.action';
+import * as ProductActions from '../../../../shared/store/actions/cart.action';
+import { selectFeatureCart } from '../../../../shared/store/selectors/cart.selector';
+import { Cart } from 'src/app/shared/store/models/cart.model';
+import {
+  minus_item,
+  plus_item,
+} from '../../../../shared/store/actions/cart.action';
 
 @Component({
   selector: 'app-cart',
@@ -10,7 +15,7 @@ import * as ProductActions from './../../../../shared/actions/product.action';
   styleUrls: ['./cart.component.scss'],
 })
 export class CartComponent implements OnInit {
-  selectedProducts: Product[] = [];
+  selectedProducts: Cart[] = [];
   totalSum: number = 0;
 
   constructor(private store: Store<AppState>) {}
@@ -20,16 +25,31 @@ export class CartComponent implements OnInit {
   }
 
   getSelectedProducts() {
-    this.store.subscribe((data: any) => {
-      this.selectedProducts = Object.values(data)[0] as Product[];
+    this.store.select(selectFeatureCart).subscribe((data) => {
+      this.selectedProducts = data;
+      this.totalSum = 0;
+      this.selectedProducts.map((el) => {
+        this.totalSum += el.totalSum;
+      });
     });
   }
 
   removeProduct(index: number) {
-    this.store.dispatch(new ProductActions.RemoveProduct(index));
+    this.store.dispatch(ProductActions.remove_product({ payload: index }));
+    this.getSelectedProducts();
   }
 
   removeAllProducts() {
-    this.store.dispatch(new ProductActions.RemoveAll());
+    this.store.dispatch(ProductActions.remove_all_products());
+    this.getSelectedProducts();
+  }
+
+  plusItem(product: Cart) {
+    this.store.dispatch(plus_item({ payload: product }));
+  }
+
+  minusItem(product: Cart) {
+    this.store.dispatch(minus_item({ payload: product }));
+    this.getSelectedProducts();
   }
 }

@@ -1,5 +1,6 @@
 import { Inject, Injectable } from '@angular/core';
 import { DOCUMENT } from '@angular/common';
+import { ThemeEnum } from '../enums/theme.enum';
 
 @Injectable({
   providedIn: 'root',
@@ -12,9 +13,9 @@ export class ThemeService {
       'app-theme'
     ) as HTMLLinkElement;
 
-    if (themeLink && theme === 'light') {
+    if (themeLink && theme === ThemeEnum.LIGHT) {
       themeLink.href = 'ng-zorro-antd.css';
-    } else if (themeLink && theme === 'dark') {
+    } else if (themeLink && theme === ThemeEnum.DARK) {
       themeLink.href = 'ng-zorro-antd-dark.css';
     }
   }
