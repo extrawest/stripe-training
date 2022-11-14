@@ -39,7 +39,7 @@ registerLocaleData(en);
     }),
     StoreDevtoolsModule.instrument({
       maxAge: 25,
-      logOnly: environment.production,
+      logOnly: !environment.production,
       autoPause: true,
     }),
   ],
