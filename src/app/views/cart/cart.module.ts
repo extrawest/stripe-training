@@ -5,6 +5,7 @@ import { RouterModule, Routes } from '@angular/router';
 import { NzTableModule } from 'ng-zorro-antd/table';
 import { NzButtonModule } from 'ng-zorro-antd/button';
 import { NzIconModule } from 'ng-zorro-antd/icon';
+import { NzModalModule } from 'ng-zorro-antd/modal';
 
 const routes: Routes = [
   {
@@ -22,7 +23,8 @@ const routes: Routes = [
     RouterModule.forChild(routes),
     NzTableModule,
     NzButtonModule,
-    NzIconModule
+    NzIconModule,
+    NzModalModule
   ]
 })
 export class CartModule { }

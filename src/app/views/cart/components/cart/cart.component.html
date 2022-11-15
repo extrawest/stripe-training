@@ -67,11 +67,34 @@
         </td>
         <td>{{ totalSum }}</td>
         <td>
-          <button nz-button nzType="default" routerLink="/home">
+          <button nz-button nzType="default" (click)="openModal()">
             Proceed to checkout
           </button>
         </td>
       </tr>
     </tbody>
   </nz-table>
+
+  <nz-modal
+    [(nzVisible)]="isModalVisible"
+    nzTitle="Card information"
+    (nzAfterOpen)="createStripeCart()"
+    (nzOnCancel)="handleCancel()"
+    (nzOnOk)="handleCancel()"
+  >
+    <ng-container *nzModalContent>
+      <div>Total sum: {{ totalSum }}</div>
+      <div *ngIf="totalSum === 0">Choose some products</div>
+      <div id="submit"></div>
+      <button
+        nz-button
+        nzSize="large"
+        [disabled]="totalSum === 0"
+        (click)="checkOut()"
+        nzBlock="true"
+      >
+        Pay
+      </button>
+    </ng-container>
+  </nz-modal>
 </div>

@@ -8,6 +8,18 @@ import {
   minus_item,
   plus_item,
 } from '../../../../shared/store/actions/cart.action';
+import { PaymentService } from 'src/app/shared/services/payment.service';
+import { Router } from '@angular/router';
+import {
+  loadStripe,
+  StripeElements,
+  Stripe,
+  StripeCardElement,
+} from '@stripe/stripe-js';
+import { from } from 'rxjs';
+import { Inject } from '@angular/core';
+import { DOCUMENT } from '@angular/common';
+import { environment } from 'src/environments/environment';
 
 @Component({
   selector: 'app-cart',
@@ -17,8 +29,18 @@ import {
 export class CartComponent implements OnInit {
   selectedProducts: Cart[] = [];
   totalSum: number = 0;
+  stripePromise = loadStripe(environment.firebaseConfig.stripeKey);
+  stripe: Stripe;
+  stripeElements: StripeElements;
+  cardElement: StripeCardElement;
+  isModalVisible: boolean = false;
 
-  constructor(private store: Store<AppState>) {}
+  constructor(
+    @Inject(DOCUMENT) document: Document,
+    private store: Store<AppState>,
+    private paymentService: PaymentService,
+    private router: Router
+  ) {}
 
   ngOnInit(): void {
     this.getSelectedProducts();
@@ -51,5 +73,38 @@ export class CartComponent implements OnInit {
   minusItem(product: Cart) {
     this.store.dispatch(minus_item({ payload: product }));
     this.getSelectedProducts();
+  }
+
+  openModal() {
+    this.isModalVisible = true;
+  }
+
+  createStripeCart() {
+    from(this.stripePromise).subscribe((stripe) => {
+      if (stripe) {
+        this.stripe = stripe;
+        this.stripeElements = stripe.elements();
+        this.cardElement = this.stripeElements.create('card');
+        const submitButton = document.getElementById('submit') as HTMLElement;
+        this.cardElement.mount(submitButton);
+      }
+    });
+  }
+
+  checkOut() {
+    this.stripe.createToken(this.cardElement).then((result) => {
+      this.paymentService
+        .createPaymentIntent({ ...result, price: this.totalSum }, 'usd')
+        .subscribe({
+          complete: () => {
+            this.router.navigateByUrl('/home');
+            this.removeAllProducts();
+          },
+        });
+    });
+  }
+
+  handleCancel() {
+    this.isModalVisible = false;
   }
 }
