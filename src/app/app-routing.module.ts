@@ -14,6 +14,16 @@ const routes: Routes = [
       import('./views/cart/cart.module').then((m) => m.CartModule),
   },
   {
+    path: 'cancel',
+    loadChildren: () =>
+      import('./views/cancel/cancel.module').then((m) => m.CancelModule),
+  },
+  {
+    path: 'success',
+    loadChildren: () =>
+      import('./views/success/success.module').then((m) => m.SuccessModule),
+  },
+  {
     path: '',
     redirectTo: 'home',
     pathMatch: 'full',

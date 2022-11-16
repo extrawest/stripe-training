@@ -30,6 +30,7 @@ export class HeaderCartComponent implements OnInit {
         this.numberOfItems = this.selectedProducts.length;
         this.selectedProducts.map((el) => {
           this.totalSum += el.totalSum;
+          this.totalSum = parseFloat(this.totalSum.toFixed(2));
         });
       });
   }

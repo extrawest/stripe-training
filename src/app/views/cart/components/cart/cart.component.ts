@@ -52,6 +52,7 @@ export class CartComponent implements OnInit {
       this.totalSum = 0;
       this.selectedProducts.map((el) => {
         this.totalSum += el.totalSum;
+        this.totalSum = parseFloat(this.totalSum.toFixed(2));
       });
     });
   }
@@ -95,11 +96,25 @@ export class CartComponent implements OnInit {
     this.stripe.createToken(this.cardElement).then((result) => {
       this.paymentService
         .createPaymentIntent({ ...result, price: this.totalSum }, 'usd')
-        .subscribe({
-          complete: () => {
-            this.router.navigateByUrl('/home');
-            this.removeAllProducts();
-          },
+        .subscribe((data) => {
+          if (data.client_secret) {
+            from(
+              this.stripe.confirmCardPayment(data.client_secret, {
+                payment_method: {
+                  card: this.cardElement,
+                },
+              })
+            ).subscribe((data) => {
+              this.removeAllProducts();
+              if (data.paymentIntent) {
+                this.router.navigateByUrl('/success');
+              } else {
+                this.router.navigateByUrl('/cancel');
+              }
+            });
+          } else {
+            this.router.navigateByUrl('/card');
+          }
         });
     });
   }

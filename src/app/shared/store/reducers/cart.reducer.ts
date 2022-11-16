@@ -31,6 +31,7 @@ export const CartReducer = createReducer(
       if (el.product.id === action.payload.product.id) {
         el.quantity! += 1;
         el.totalSum! += el.product.price;
+        el.totalSum = parseFloat(el.totalSum.toFixed(2));
       }
     });
     return cart;
@@ -41,6 +42,7 @@ export const CartReducer = createReducer(
       if (el.product.id === action.payload.product.id && el.quantity > 0) {
         el.quantity! -= 1;
         el.totalSum! -= el.product.price;
+        el.totalSum = parseFloat(el.totalSum.toFixed(2));
       }
     });
     return cart;
