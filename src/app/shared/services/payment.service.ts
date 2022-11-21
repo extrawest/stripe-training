@@ -9,7 +9,7 @@ export class PaymentService {
   constructor(private http: HttpClient) {}
 
   checkout(stripeToken: string): Observable<any> {
-    const url = 'https://stripe-training-backend-2.herokuapp.com/checkout';
+    const url = 'http://localhost:3000/checkout';
     return this.http.post<any>(url, { token: stripeToken }).pipe(
       map((data) => data),
       catchError((error) => throwError(() => error))
@@ -17,7 +17,7 @@ export class PaymentService {
   }
 
   createPaymentIntent = (cart: any, currency: any) => {
-    const url = 'https://stripe-training-backend-2.herokuapp.com/checkout';
+    const url = 'http://localhost:3000/checkout';
     return this.http
       .post<any>(url, {
         products: cart,
