@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable, throwError } from 'rxjs';
 import { catchError, map } from 'rxjs/operators';
-import { ProductInterface } from '../interfaces/product.interface';
+import { ProductInterface } from '../../interfaces/product.interface';
 
 @Injectable({
   providedIn: 'root',
@@ -28,39 +28,10 @@ export class ProductService {
       );
   }
 
-  getSingleProduct(productId: number): Observable<ProductInterface> {
-    return this.http
-      .get<ProductInterface>('https://fakestoreapi.com/products/' + productId)
-      .pipe(
-        map((data) => data),
-        catchError((error) => throwError(() => error))
-      );
-  }
-
   getLimitedProducts(limit: string): Observable<ProductInterface[]> {
     return this.http
       .get<ProductInterface[]>(
         'https://fakestoreapi.com/products?limit=' + limit
-      )
-      .pipe(
-        map((data) => data),
-        catchError((error) => throwError(() => error))
-      );
-  }
-
-  getSortedProducts(sort: string): Observable<ProductInterface[]> {
-    return this.http
-      .get<ProductInterface[]>('https://fakestoreapi.com/products?sort=' + sort)
-      .pipe(
-        map((data) => data),
-        catchError((error) => throwError(() => error))
-      );
-  }
-
-  getProductsByCategory(category: string): Observable<ProductInterface[]> {
-    return this.http
-      .get<ProductInterface[]>(
-        'https://fakestoreapi.com/products/category/' + category
       )
       .pipe(
         map((data) => data),
