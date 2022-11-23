@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { ThemeEnum } from '../enums/theme.enum';
+import { ThemeEnum } from '../../enums/theme.enum';
 
 /**
  * local storage service
@@ -36,14 +36,6 @@ export class LocalStorageService {
    */
   hasValue(key: string): boolean {
     return !this.isNull(localStorage.getItem(key));
-  }
-
-  /**
-   * remove key from local storage
-   * @param key - local storage key
-   */
-  removeValue(key: string): void {
-    return localStorage.removeItem(key);
   }
 
   /**

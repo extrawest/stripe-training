@@ -4,17 +4,27 @@
       <img
         [src]="product.image"
         [ngStyle]="{ height: '200px', width: '150px' }"
+        id="image"
       />
     </div>
     <div nz-col nzSpan="18">
-      <div [ngStyle]="{ height: '30px' }">{{ product.category }}</div>
-      <div [ngStyle]="{ height: '30px' }">{{ product.title }}</div>
-      <div [ngStyle]="{ height: '50px' }">{{ product.description }}</div>
+      <div [ngStyle]="{ height: '30px' }" id="category">
+        {{ product.category }}
+      </div>
+      <div [ngStyle]="{ height: '30px' }" id="title">{{ product.title }}</div>
+      <div [ngStyle]="{ height: '50px' }" id="description">
+        {{ product.description }}
+      </div>
       <div nz-row [ngStyle]="{ 'margin-top': '60px' }">
-        <div nz-col nzSpan="22" [ngStyle]="{ color: 'red' }">
+        <div nz-col nzSpan="22" [ngStyle]="{ color: 'red' }" id="price">
           ${{ product.price }}
         </div>
-        <div nz-col nzSpan="2" (click)="addProductToCart(product)" class="pointer">
+        <div
+          nz-col
+          nzSpan="2"
+          (click)="addProductToCart(product)"
+          class="pointer"
+        >
           <img
             src="./../../../../../assets/icons/cart-icon.png"
             class="icon"
@@ -30,14 +40,15 @@
   <div class="card">
     <img
       [src]="product.image"
+      id="image"
       [ngStyle]="{ height: '200px', width: '150px' }"
     />
-    <div>{{ product.category }}</div>
-    <div [ngStyle]="{ 'text-align': 'center', height: '50px' }">
+    <div id="category">{{ product.category }}</div>
+    <div [ngStyle]="{ 'text-align': 'center', height: '50px' }" id="title">
       {{ product.title }}
     </div>
     <div [ngStyle]="{ width: '100%', display: 'flex', 'margin-top': '40px' }">
-      <div nz-col nzSpan="22" [ngStyle]="{ color: 'red' }">
+      <div nz-col nzSpan="22" [ngStyle]="{ color: 'red' }" id="price">
         ${{ product.price }}
       </div>
       <div nz-col nzSpan="2" (click)="addProductToCart(product)">

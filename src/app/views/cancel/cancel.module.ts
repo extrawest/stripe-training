@@ -13,14 +13,12 @@ const routes: Routes = [
 ];
 
 @NgModule({
-  declarations: [
-    CancelComponent
-  ],
+  declarations: [CancelComponent],
   imports: [
     CommonModule,
     RouterModule.forChild(routes),
     NzIconModule,
-    NzButtonModule
-  ]
+    NzButtonModule,
+  ],
 })
-export class CancelModule { }
+export class CancelModule {}

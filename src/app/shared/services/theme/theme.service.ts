@@ -1,6 +1,6 @@
 import { Inject, Injectable } from '@angular/core';
 import { DOCUMENT } from '@angular/common';
-import { ThemeEnum } from '../enums/theme.enum';
+import { ThemeEnum } from '../../enums/theme.enum';
 
 @Injectable({
   providedIn: 'root',
