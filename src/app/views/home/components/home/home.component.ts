@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { ProductService } from 'src/app/shared/services/product.service';
+import { ProductService } from 'src/app/shared/services/product/product.service';
 import { SortEnum } from 'src/app/shared/enums/sort.enum';
 import { ProductLimitEnum } from 'src/app/shared/enums/product-limit.enum';
 import { ProductInterface } from 'src/app/shared/interfaces/product.interface';
