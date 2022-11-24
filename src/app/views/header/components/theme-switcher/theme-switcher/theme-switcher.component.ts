@@ -1,7 +1,6 @@
 import { Component, OnInit } from '@angular/core';
-
-import { ThemeService } from 'src/app/shared/services/theme.service';
-import { LocalStorageService } from 'src/app/shared/services/local-storage-service';
+import { ThemeService } from 'src/app/shared/services/theme/theme.service';
+import { LocalStorageService } from 'src/app/shared/services/local-storage/local-storage.service';
 import { ThemeEnum } from 'src/app/shared/enums/theme.enum';
 
 @Component({
