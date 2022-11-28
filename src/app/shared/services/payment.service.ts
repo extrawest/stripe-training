@@ -17,7 +17,7 @@ export class PaymentService {
   }
 
   createPaymentIntent = (cart: any, currency: any) => {
-    const url = 'https://stripe-training-backend-2.herokuapp.com/checkout';
+    const url = 'https://shop-mu-steel.vercel.app/checkout';
     return this.http
       .post<any>(url, {
         products: cart,
