@@ -8,14 +8,6 @@ import { Observable, map, catchError, throwError } from 'rxjs';
 export class PaymentService {
   constructor(private http: HttpClient) {}
 
-  checkout(stripeToken: string): Observable<any> {
-    const url = 'https://stripe-training-backend-2.herokuapp.com/checkout';
-    return this.http.post<any>(url, { token: stripeToken }).pipe(
-      map((data) => data),
-      catchError((error) => throwError(() => error))
-    );
-  }
-
   createPaymentIntent = (cart: any, currency: any) => {
     const url = 'https://shop-mu-steel.vercel.app/checkout';
     return this.http
