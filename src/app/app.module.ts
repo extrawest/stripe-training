@@ -11,7 +11,6 @@ import { registerLocaleData } from '@angular/common';
 import en from '@angular/common/locales/en';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { HeaderModule } from './views/header/header.module';
-import { provideFirebaseApp, getApp, initializeApp } from '@angular/fire/app';
 import { environment } from 'src/environments/environment';
 import { StoreModule } from '@ngrx/store';
 import { CartReducer } from './shared/store/reducers/cart.reducer';
@@ -31,7 +30,6 @@ registerLocaleData(en);
     HttpClientModule,
     BrowserAnimationsModule,
     HeaderModule,
-    provideFirebaseApp(() => initializeApp(environment.firebaseConfig)),
     StoreModule.forRoot({
       cart: CartReducer,
       products: ProductsReducer,
