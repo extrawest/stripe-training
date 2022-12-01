@@ -6,7 +6,7 @@ export const initialState: Product[] = [];
 
 export const ProductsReducer = createReducer(
   initialState,
-  on(insert_products, (state, action) => {
+  on(insert_products, (_, action) => {
     return action.payload;
   })
 );

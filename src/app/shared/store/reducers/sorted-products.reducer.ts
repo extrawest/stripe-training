@@ -6,7 +6,7 @@ export const initialState: Product[] = [];
 
 export const SortedProductsReducer = createReducer(
   initialState,
-  on(insert_sorted_products, (state, action) => {
+  on(insert_sorted_products, (_, action) => {
     return action.payload;
   })
 );
