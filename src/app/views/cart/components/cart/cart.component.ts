@@ -8,7 +8,7 @@ import {
   minus_item,
   plus_item,
 } from '../../../../shared/store/actions/cart.action';
-import { PaymentService } from 'src/app/shared/services/payment.service';
+import { PaymentService } from 'src/app/shared/services/payment/payment.service';
 import { Router } from '@angular/router';
 import {
   loadStripe,
@@ -29,7 +29,7 @@ import { environment } from 'src/environments/environment';
 export class CartComponent implements OnInit {
   selectedProducts: Cart[] = [];
   totalSum: number = 0;
-  stripePromise = loadStripe(environment.firebaseConfig.stripeKey);
+  stripePromise = loadStripe(environment.stripeKey);
   stripe: Stripe;
   stripeElements: StripeElements;
   cardElement: StripeCardElement;
@@ -43,7 +43,14 @@ export class CartComponent implements OnInit {
   ) {}
 
   ngOnInit(): void {
-    this.getSelectedProducts();
+    this.store.select(selectFeatureCart).subscribe((data) => {
+      this.selectedProducts = data;
+      this.totalSum = 0;
+      this.selectedProducts.map((el) => {
+        this.totalSum += el.totalSum;
+        this.totalSum = parseFloat(this.totalSum.toFixed(2));
+      });
+    });
   }
 
   getSelectedProducts() {
@@ -59,12 +66,10 @@ export class CartComponent implements OnInit {
 
   removeProduct(index: number) {
     this.store.dispatch(ProductActions.remove_product({ payload: index }));
-    this.getSelectedProducts();
   }
 
   removeAllProducts() {
     this.store.dispatch(ProductActions.remove_all_products());
-    this.getSelectedProducts();
   }
 
   plusItem(product: Cart) {
@@ -73,7 +78,6 @@ export class CartComponent implements OnInit {
 
   minusItem(product: Cart) {
     this.store.dispatch(minus_item({ payload: product }));
-    this.getSelectedProducts();
   }
 
   openModal() {

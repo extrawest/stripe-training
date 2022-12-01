@@ -18,7 +18,16 @@ export class HeaderCartComponent implements OnInit {
   constructor(private store: Store<AppState>) {}
 
   ngOnInit(): void {
-    this.getSelectedProducts();
+    this.store
+      .select(selectFeatureCart)
+      .subscribe((data) => {
+       this.selectedProducts = data;
+        this.numberOfItems = this.selectedProducts.length;
+        this.selectedProducts.map((el) => {
+          this.totalSum += el.totalSum;
+          this.totalSum = parseFloat(this.totalSum.toFixed(2));
+        });
+      });
   }
 
   getSelectedProducts() {
@@ -37,6 +46,5 @@ export class HeaderCartComponent implements OnInit {
 
   removeAllProducts() {
     this.store.dispatch(ProductActions.remove_all_products());
-    this.getSelectedProducts();
   }
 }
