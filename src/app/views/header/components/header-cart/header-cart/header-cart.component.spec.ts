@@ -9,6 +9,7 @@ import { Location } from '@angular/common';
 import { RouterTestingModule } from '@angular/router/testing';
 import { HomeComponent } from 'src/app/views/home/components/home/home.component';
 import { HeaderCartComponent } from './header-cart.component';
+import { provideMockStore } from '@ngrx/store/testing';
 
 describe('HeaderCartComponent', () => {
   let router: Router;
@@ -23,6 +24,7 @@ describe('HeaderCartComponent', () => {
           { path: 'home', component: HomeComponent },
         ]),
       ],
+      providers: [provideMockStore({})],
       declarations: [HomeComponent],
     }).compileComponents();
 
