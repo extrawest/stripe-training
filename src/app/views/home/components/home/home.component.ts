@@ -1,7 +1,5 @@
 import { Component, OnInit } from '@angular/core';
 import { ProductService } from 'src/app/shared/services/product/product.service';
-import { SortEnum } from 'src/app/shared/enums/sort.enum';
-import { ProductLimitEnum } from 'src/app/shared/enums/product-limit.enum';
 import { ProductInterface } from 'src/app/shared/interfaces/product.interface';
 import { Store } from '@ngrx/store';
 import { Product } from '../../../../shared/store/models/product.model';
@@ -11,6 +9,7 @@ import { selectFeatureProducts } from '../../../../shared/store/selectors/produc
 import { first } from 'rxjs';
 import { selectFeatureSortedProducts } from '../../../../shared/store/selectors/sorted-products.selector';
 import * as SortedProductActions from '../../../../shared/store/actions/sorted-products.action';
+import { SpanTypesEnum } from './../../../../shared/enums/span-types.enum';
 
 @Component({
   selector: 'app-home',
@@ -19,29 +18,20 @@ import * as SortedProductActions from '../../../../shared/store/actions/sorted-p
 })
 export class HomeComponent implements OnInit {
   categories: string[] = [];
-  sortTypes: string[] = [];
-  productLimits: string[] = [];
+  sortTypes: string[] = ['desc', 'asc'];
+  productLimits: string[] = ['10', '15', '20'];
   products: ProductInterface[] = [];
   nzSpan: number;
+  spanTypes = SpanTypesEnum;
   constructor(
     private productService: ProductService,
     private store: Store<AppState>
   ) {}
 
   ngOnInit(): void {
-    this.getCategories();
-    this.sortTypes = Object.values(SortEnum);
-    this.productLimits = Object.values(ProductLimitEnum);
-    this.getProducts();
-  }
-
-  getCategories() {
     this.productService.getCategories().subscribe((data) => {
       data.map((el: string) => this.categories.push(el));
     });
-  }
-
-  getProducts() {
     this.productService.getAllProducts().subscribe((data) => {
       this.store.dispatch(ProductActions.insert_products({ payload: data }));
       this.products = data;
@@ -109,15 +99,7 @@ export class HomeComponent implements OnInit {
       });
   }
 
-  displayOneItemInARow() {
-    this.nzSpan = 24;
-  }
-
-  displayThreeItemsInARow() {
-    this.nzSpan = 7;
-  }
-
-  displayFourItemsInARow() {
-    this.nzSpan = 5;
+  setDisplayItemsInARow(span: SpanTypesEnum): void {
+    this.nzSpan = span;
   }
 }
