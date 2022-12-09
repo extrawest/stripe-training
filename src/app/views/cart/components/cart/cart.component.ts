@@ -1,13 +1,13 @@
 import { Component, OnInit } from '@angular/core';
 import { Store } from '@ngrx/store';
 import { AppState } from './../../../../app.state';
-import * as ProductActions from '../../../../shared/store/actions/cart.action';
-import { selectFeatureCart } from '../../../../shared/store/selectors/cart.selector';
-import { Cart } from 'src/app/shared/store/models/cart.model';
+import * as ProductActions from '../../../../shared/store/cart/actions/cart.action';
+import { selectFeatureCart } from '../../../../shared/store/cart/selectors/cart.selector';
+import { Cart } from 'src/app/shared/store/cart/models/cart.model';
 import {
-  minus_item,
-  plus_item,
-} from '../../../../shared/store/actions/cart.action';
+  minusItem,
+  plusItem,
+} from '../../../../shared/store/cart/actions/cart.action';
 import { PaymentService } from 'src/app/shared/services/payment/payment.service';
 import { Router } from '@angular/router';
 import {
@@ -65,19 +65,19 @@ export class CartComponent implements OnInit {
   }
 
   removeProduct(index: number) {
-    this.store.dispatch(ProductActions.remove_product({ payload: index }));
+    this.store.dispatch(ProductActions.removeProduct({ payload: index }));
   }
 
   removeAllProducts() {
-    this.store.dispatch(ProductActions.remove_all_products());
+    this.store.dispatch(ProductActions.removeAllProducts());
   }
 
   plusItem(product: Cart) {
-    this.store.dispatch(plus_item({ payload: product }));
+    this.store.dispatch(plusItem({ payload: product }));
   }
 
   minusItem(product: Cart) {
-    this.store.dispatch(minus_item({ payload: product }));
+    this.store.dispatch(minusItem({ payload: product }));
   }
 
   openModal() {
