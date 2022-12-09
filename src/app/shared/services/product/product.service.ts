@@ -28,10 +28,29 @@ export class ProductService {
       );
   }
 
-  getLimitedProducts(limit: string): Observable<ProductInterface[]> {
+  getSelectedProducts(category?: string, sortType?: string, limit?: string) {
     return this.http
       .get<ProductInterface[]>(
-        'https://fakestoreapi.com/products?limit=' + limit
+        'https://fakestoreapi.com/products/category/' +
+          category +
+          '?sort=' +
+          sortType +
+          '&limit=' +
+          limit
+      )
+      .pipe(
+        map((data) => data),
+        catchError((error) => throwError(() => error))
+      );
+  }
+
+  getSelectedProductsBySortTypeAndLimit(sortType?: string, limit?: string) {
+    return this.http
+      .get<ProductInterface[]>(
+        'https://fakestoreapi.com/products/?sort=' +
+          sortType +
+          '&limit=' +
+          limit
       )
       .pipe(
         map((data) => data),
