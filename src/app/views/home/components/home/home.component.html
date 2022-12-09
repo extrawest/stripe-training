@@ -7,7 +7,7 @@
             nz-menu-group
             *ngFor="let category of categories"
             [nzTitle]="category"
-            (click)="getProductsbyCategory(category)"
+            (click)="getSelectedProductsByCategory(category)"
           ></li>
         </ul>
       </li>
@@ -20,7 +20,7 @@
           <li
             nz-menu-item
             *ngFor="let sortType of sortTypes"
-            (click)="sortProducts(sortType)"
+            (click)="getSelectedProductsBySortType(sortType)"
           >
             {{ sortType }}
           </li>
@@ -31,7 +31,7 @@
           <li
             nz-menu-item
             *ngFor="let productLimit of productLimits"
-            (click)="limitProducts(productLimit)"
+            (click)="getSelectedProductsByLimit(productLimit)"
           >
             {{ productLimit }}
           </li>

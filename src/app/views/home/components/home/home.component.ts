@@ -2,13 +2,10 @@ import { Component, OnInit } from '@angular/core';
 import { ProductService } from 'src/app/shared/services/product/product.service';
 import { ProductInterface } from 'src/app/shared/interfaces/product.interface';
 import { Store } from '@ngrx/store';
-import { Product } from '../../../../shared/store/models/product.model';
+import { Product } from '../../../../shared/store/products/models/product.model';
 import { AppState } from './../../../../app.state';
-import * as ProductActions from '../../../../shared/store/actions/products.action';
-import { selectFeatureProducts } from '../../../../shared/store/selectors/products.selector';
-import { first } from 'rxjs';
-import { selectFeatureSortedProducts } from '../../../../shared/store/selectors/sorted-products.selector';
-import * as SortedProductActions from '../../../../shared/store/actions/sorted-products.action';
+import * as ProductActions from '../../../../shared/store/products/actions/products.action';
+import { selectProducts } from '../../../../shared/store/products/selectors/products.selector';
 import { SpanTypesEnum } from './../../../../shared/enums/span-types.enum';
 
 @Component({
@@ -19,10 +16,13 @@ import { SpanTypesEnum } from './../../../../shared/enums/span-types.enum';
 export class HomeComponent implements OnInit {
   categories: string[] = [];
   sortTypes: string[] = ['desc', 'asc'];
-  productLimits: string[] = ['10', '15', '20'];
+  productLimits: string[] = ['3', '5', '7'];
   products: ProductInterface[] = [];
   nzSpan: number;
   spanTypes = SpanTypesEnum;
+  category: string;
+  limit: string;
+  sortType: string;
   constructor(
     private productService: ProductService,
     private store: Store<AppState>
@@ -32,71 +32,50 @@ export class HomeComponent implements OnInit {
     this.productService.getCategories().subscribe((data) => {
       data.map((el: string) => this.categories.push(el));
     });
-    this.productService.getAllProducts().subscribe((data) => {
-      this.store.dispatch(ProductActions.insert_products({ payload: data }));
+    this.store.dispatch(ProductActions.getAllProducts());
+    this.store.select(selectProducts).subscribe((data) => {
       this.products = data;
     });
   }
 
-  limitProducts(productLimit: string) {
-    this.productService.getLimitedProducts(productLimit).subscribe((data) => {
-      this.products = data;
-      this.store.dispatch(ProductActions.insert_products({ payload: data }));
+  getSelectedProductsByCategory(category: string) {
+    this.category = category;
+    this.manageProducts();
+  }
+
+  getSelectedProductsByLimit(limit: string) {
+    this.limit = limit;
+    this.manageProducts();
+  }
+
+  getSelectedProductsBySortType(sortType: string) {
+    this.sortType = sortType;
+    this.manageProducts();
+  }
+
+  manageProducts() {
+    if (this.category) {
       this.store.dispatch(
-        SortedProductActions.insert_sorted_products({ payload: [] })
+        ProductActions.getSelectedProducts({
+          category: this.category,
+          sortType: this.sortType,
+          limit: this.limit,
+        })
       );
-    });
-  }
-
-  sortProducts(typeOfSort: string) {
-    this.store
-      .select(selectFeatureSortedProducts)
-      .pipe(first())
-      .subscribe((data) => {
-        if (data.length === 0) {
-          this.store
-            .select(selectFeatureProducts)
-            .pipe(first())
-            .subscribe((products) => {
-              this.sort(products, typeOfSort);
-            });
-        } else {
-          this.sort(data, typeOfSort);
-        }
+      this.store.select(selectProducts).subscribe((data) => {
+        this.products = data;
       });
-  }
-
-  sort(data: Product[], typeOfSort: string) {
-    this.products = [...data];
-    if (typeOfSort === 'asc') {
-      this.products.sort((p1, p2) => {
-        return p1.price - p2.price;
-      });
-    } else if (typeOfSort === 'desc') {
-      this.products.sort((p1, p2) =>
-        p1.price < p2.price ? 1 : p1.price > p2.price ? -1 : 0
+    } else {
+      this.store.dispatch(
+        ProductActions.getSelectedProductsBySortTypeAndLimit({
+          sortType: this.sortType,
+          limit: this.limit,
+        })
       );
+      this.store.select(selectProducts).subscribe((data) => {
+        this.products = data;
+      });
     }
-  }
-
-  getProductsbyCategory(category: string) {
-    this.store
-      .select(selectFeatureProducts)
-      .pipe(first())
-      .subscribe((data) => {
-        let productsbyCategory: ProductInterface[] = [];
-        data.map((el) => {
-          if (el.category === category) {
-            productsbyCategory.push(el);
-          }
-        });
-        this.products = productsbyCategory;
-        this.store.dispatch(
-          SortedProductActions.insert_sorted_products({
-            payload: this.products,
-          })
-        );
-      });
   }
 
   setDisplayItemsInARow(span: SpanTypesEnum): void {
