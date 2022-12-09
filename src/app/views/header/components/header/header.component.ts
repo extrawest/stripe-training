@@ -1,9 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Store } from '@ngrx/store';
 import { AppState } from './../../../../app.state';
-import { Subject } from 'rxjs';
-import { selectFeatureCart } from './../../../../shared/store/selectors/cart.selector';
-import { Cart } from 'src/app/shared/store/models/cart.model';
+import { selectLengthFeatureCart } from '../../../../shared/store/cart/selectors/cart.selector';
 
 @Component({
   selector: 'app-header',
@@ -12,19 +10,11 @@ import { Cart } from 'src/app/shared/store/models/cart.model';
 })
 export class HeaderComponent implements OnInit {
   cartItems: number = 0;
-  items$: Subject<number> = new Subject();
   constructor(private store: Store<AppState>) {}
 
   ngOnInit(): void {
-    this.getCartItems();
-  }
-
-  getCartItems() {
-    this.store.select(selectFeatureCart).subscribe((data: Cart[]) => {
-      this.cartItems = 0;
-      data.map((el) => {
-        this.cartItems += el.quantity;
-      });
+    this.store.select(selectLengthFeatureCart).subscribe((length: number) => {
+      this.cartItems = length;
     });
   }
 }

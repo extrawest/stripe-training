@@ -63,19 +63,7 @@ describe('HomeComponent', () => {
 
   it('should set tne number - 24 for variable nzSpan', () => {
     let nzSpan = 24;
-    component.displayOneItemInARow();
-    expect(component.nzSpan).toBe(nzSpan);
-  });
-
-  it('should set tne number - 7 for variable nzSpan', () => {
-    let nzSpan = 7;
-    component.displayThreeItemsInARow();
-    expect(component.nzSpan).toBe(nzSpan);
-  });
-
-  it('should set tne number - 5 for variable nzSpan', () => {
-    let nzSpan = 5;
-    component.displayFourItemsInARow();
+    component.setDisplayItemsInARow(nzSpan);
     expect(component.nzSpan).toBe(nzSpan);
   });
 });

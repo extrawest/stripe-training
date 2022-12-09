@@ -1,10 +1,10 @@
 import { Component, OnInit } from '@angular/core';
-import * as ProductActions from '../../../../../shared/store/actions/cart.action';
+import * as ProductActions from '../../../../../shared/store/cart/actions/cart.action';
 import { Store } from '@ngrx/store';
 import { AppState } from './../../../../../app.state';
 import { first } from 'rxjs';
-import { selectFeatureCart } from './../../../../../shared/store/selectors/cart.selector';
-import { Cart } from 'src/app/shared/store/models/cart.model';
+import { selectFeatureCart } from '../../../../../shared/store/cart/selectors/cart.selector';
+import { Cart } from 'src/app/shared/store/cart/models/cart.model';
 
 @Component({
   selector: 'app-header-cart',
@@ -18,7 +18,16 @@ export class HeaderCartComponent implements OnInit {
   constructor(private store: Store<AppState>) {}
 
   ngOnInit(): void {
-    this.getSelectedProducts();
+    this.store
+      .select(selectFeatureCart)
+      .subscribe((data) => {
+       this.selectedProducts = data;
+        this.numberOfItems = this.selectedProducts.length;
+        this.selectedProducts.map((el) => {
+          this.totalSum += el.totalSum;
+          this.totalSum = parseFloat(this.totalSum.toFixed(2));
+        });
+      });
   }
 
   getSelectedProducts() {
@@ -36,7 +45,6 @@ export class HeaderCartComponent implements OnInit {
   }
 
   removeAllProducts() {
-    this.store.dispatch(ProductActions.remove_all_products());
-    this.getSelectedProducts();
+    this.store.dispatch(ProductActions.removeAllProducts());
   }
 }

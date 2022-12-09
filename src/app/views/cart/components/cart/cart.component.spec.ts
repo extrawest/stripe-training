@@ -9,6 +9,11 @@ import { Location } from '@angular/common';
 import { RouterTestingModule } from '@angular/router/testing';
 import { HomeComponent } from 'src/app/views/home/components/home/home.component';
 import { CartComponent } from './cart.component';
+import { provideMockStore } from '@ngrx/store/testing';
+import {
+  HttpClientTestingModule,
+  HttpTestingController,
+} from '@angular/common/http/testing';
 
 describe('CartComponent', () => {
   let router: Router;
@@ -18,12 +23,14 @@ describe('CartComponent', () => {
 
   beforeEach(() => {
     TestBed.configureTestingModule({
+      declarations: [HomeComponent],
+      providers: [provideMockStore({})],
       imports: [
         RouterTestingModule.withRoutes([
           { path: 'home', component: HomeComponent },
         ]),
+        HttpClientTestingModule,
       ],
-      declarations: [HomeComponent],
     }).compileComponents();
 
     fixture = TestBed.createComponent(CartComponent);

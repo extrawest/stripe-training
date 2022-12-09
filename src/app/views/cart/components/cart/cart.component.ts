@@ -1,14 +1,14 @@
 import { Component, OnInit } from '@angular/core';
 import { Store } from '@ngrx/store';
 import { AppState } from './../../../../app.state';
-import * as ProductActions from '../../../../shared/store/actions/cart.action';
-import { selectFeatureCart } from '../../../../shared/store/selectors/cart.selector';
-import { Cart } from 'src/app/shared/store/models/cart.model';
+import * as ProductActions from '../../../../shared/store/cart/actions/cart.action';
+import { selectFeatureCart } from '../../../../shared/store/cart/selectors/cart.selector';
+import { Cart } from 'src/app/shared/store/cart/models/cart.model';
 import {
-  minus_item,
-  plus_item,
-} from '../../../../shared/store/actions/cart.action';
-import { PaymentService } from 'src/app/shared/services/payment.service';
+  minusItem,
+  plusItem,
+} from '../../../../shared/store/cart/actions/cart.action';
+import { PaymentService } from 'src/app/shared/services/payment/payment.service';
 import { Router } from '@angular/router';
 import {
   loadStripe,
@@ -29,7 +29,7 @@ import { environment } from 'src/environments/environment';
 export class CartComponent implements OnInit {
   selectedProducts: Cart[] = [];
   totalSum: number = 0;
-  stripePromise = loadStripe(environment.firebaseConfig.stripeKey);
+  stripePromise = loadStripe(environment.stripeKey);
   stripe: Stripe;
   stripeElements: StripeElements;
   cardElement: StripeCardElement;
@@ -43,7 +43,14 @@ export class CartComponent implements OnInit {
   ) {}
 
   ngOnInit(): void {
-    this.getSelectedProducts();
+    this.store.select(selectFeatureCart).subscribe((data) => {
+      this.selectedProducts = data;
+      this.totalSum = 0;
+      this.selectedProducts.map((el) => {
+        this.totalSum += el.totalSum;
+        this.totalSum = parseFloat(this.totalSum.toFixed(2));
+      });
+    });
   }
 
   getSelectedProducts() {
@@ -58,22 +65,19 @@ export class CartComponent implements OnInit {
   }
 
   removeProduct(index: number) {
-    this.store.dispatch(ProductActions.remove_product({ payload: index }));
-    this.getSelectedProducts();
+    this.store.dispatch(ProductActions.removeProduct({ payload: index }));
   }
 
   removeAllProducts() {
-    this.store.dispatch(ProductActions.remove_all_products());
-    this.getSelectedProducts();
+    this.store.dispatch(ProductActions.removeAllProducts());
   }
 
   plusItem(product: Cart) {
-    this.store.dispatch(plus_item({ payload: product }));
+    this.store.dispatch(plusItem({ payload: product }));
   }
 
   minusItem(product: Cart) {
-    this.store.dispatch(minus_item({ payload: product }));
-    this.getSelectedProducts();
+    this.store.dispatch(minusItem({ payload: product }));
   }
 
   openModal() {

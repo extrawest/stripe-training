@@ -7,7 +7,7 @@
             nz-menu-group
             *ngFor="let category of categories"
             [nzTitle]="category"
-            (click)="getProductsbyCategory(category)"
+            (click)="getSelectedProductsByCategory(category)"
           ></li>
         </ul>
       </li>
@@ -20,7 +20,7 @@
           <li
             nz-menu-item
             *ngFor="let sortType of sortTypes"
-            (click)="sortProducts(sortType)"
+            (click)="getSelectedProductsBySortType(sortType)"
           >
             {{ sortType }}
           </li>
@@ -31,25 +31,25 @@
           <li
             nz-menu-item
             *ngFor="let productLimit of productLimits"
-            (click)="limitProducts(productLimit)"
+            (click)="getSelectedProductsByLimit(productLimit)"
           >
             {{ productLimit }}
           </li>
         </ul>
       </li>
-      <li nz-menu-item (click)="displayOneItemInARow()">
+      <li nz-menu-item (click)="setDisplayItemsInARow(spanTypes.SPAN_24)">
         <img
           src="./../../../../../assets/icons/1-in-row.png"
           class="menu-icon"
         />
       </li>
-      <li nz-menu-item (click)="displayThreeItemsInARow()">
+      <li nz-menu-item (click)="setDisplayItemsInARow(spanTypes.SPAN_7)">
         <img
           src="./../../../../../assets/icons/3-in-row.png"
           class="menu-icon"
         />
       </li>
-      <li nz-menu-item (click)="displayFourItemsInARow()">
+      <li nz-menu-item (click)="setDisplayItemsInARow(spanTypes.SPAN_5)">
         <img
           src="./../../../../../assets/icons/4-in-row.png"
           class="menu-icon"
