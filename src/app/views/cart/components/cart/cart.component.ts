@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnDestroy } from '@angular/core';
 import { Store } from '@ngrx/store';
 import { AppState } from './../../../../app.state';
 import * as ProductActions from '../../../../shared/store/cart/actions/cart.action';
@@ -20,13 +20,15 @@ import { from } from 'rxjs';
 import { Inject } from '@angular/core';
 import { DOCUMENT } from '@angular/common';
 import { environment } from 'src/environments/environment';
+import { Subject } from 'rxjs';
+import { takeUntil } from 'rxjs/operators';
 
 @Component({
   selector: 'app-cart',
   templateUrl: './cart.component.html',
   styleUrls: ['./cart.component.scss'],
 })
-export class CartComponent implements OnInit {
+export class CartComponent implements OnDestroy {
   selectedProducts: Cart[] = [];
   totalSum: number = 0;
   stripePromise = loadStripe(environment.stripeKey);
@@ -34,6 +36,7 @@ export class CartComponent implements OnInit {
   stripeElements: StripeElements;
   cardElement: StripeCardElement;
   isModalVisible: boolean = false;
+  componentDestroyed$: Subject<void> = new Subject();
 
   constructor(
     @Inject(DOCUMENT) document: Document,
@@ -43,25 +46,31 @@ export class CartComponent implements OnInit {
   ) {}
 
   ngOnInit(): void {
-    this.store.select(selectFeatureCart).subscribe((data) => {
-      this.selectedProducts = data;
-      this.totalSum = 0;
-      this.selectedProducts.map((el) => {
-        this.totalSum += el.totalSum;
-        this.totalSum = parseFloat(this.totalSum.toFixed(2));
+    this.store
+      .select(selectFeatureCart)
+      .pipe(takeUntil(this.componentDestroyed$))
+      .subscribe((data) => {
+        this.selectedProducts = data;
+        this.totalSum = 0;
+        this.selectedProducts.map((el) => {
+          this.totalSum += el.totalSum;
+          this.totalSum = parseFloat(this.totalSum.toFixed(2));
+        });
       });
-    });
   }
 
   getSelectedProducts() {
-    this.store.select(selectFeatureCart).subscribe((data) => {
-      this.selectedProducts = data;
-      this.totalSum = 0;
-      this.selectedProducts.map((el) => {
-        this.totalSum += el.totalSum;
-        this.totalSum = parseFloat(this.totalSum.toFixed(2));
+    this.store
+      .select(selectFeatureCart)
+      .pipe(takeUntil(this.componentDestroyed$))
+      .subscribe((data) => {
+        this.selectedProducts = data;
+        this.totalSum = 0;
+        this.selectedProducts.map((el) => {
+          this.totalSum += el.totalSum;
+          this.totalSum = parseFloat(this.totalSum.toFixed(2));
+        });
       });
-    });
   }
 
   removeProduct(index: number) {
@@ -85,21 +94,24 @@ export class CartComponent implements OnInit {
   }
 
   createStripeCart() {
-    from(this.stripePromise).subscribe((stripe) => {
-      if (stripe) {
-        this.stripe = stripe;
-        this.stripeElements = stripe.elements();
-        this.cardElement = this.stripeElements.create('card');
-        const submitButton = document.getElementById('submit') as HTMLElement;
-        this.cardElement.mount(submitButton);
-      }
-    });
+    from(this.stripePromise)
+      .pipe(takeUntil(this.componentDestroyed$))
+      .subscribe((stripe) => {
+        if (stripe) {
+          this.stripe = stripe;
+          this.stripeElements = stripe.elements();
+          this.cardElement = this.stripeElements.create('card');
+          const submitButton = document.getElementById('submit') as HTMLElement;
+          this.cardElement.mount(submitButton);
+        }
+      });
   }
 
   checkOut() {
     this.stripe.createToken(this.cardElement).then((result) => {
       this.paymentService
         .createPaymentIntent({ ...result, price: this.totalSum }, 'usd')
+        .pipe(takeUntil(this.componentDestroyed$))
         .subscribe((data) => {
           if (data.client_secret) {
             from(
@@ -108,14 +120,16 @@ export class CartComponent implements OnInit {
                   card: this.cardElement,
                 },
               })
-            ).subscribe((data) => {
-              this.removeAllProducts();
-              if (data.paymentIntent) {
-                this.router.navigateByUrl('/success');
-              } else {
-                this.router.navigateByUrl('/cancel');
-              }
-            });
+            )
+              .pipe(takeUntil(this.componentDestroyed$))
+              .subscribe((data) => {
+                this.removeAllProducts();
+                if (data.paymentIntent) {
+                  this.router.navigateByUrl('/success');
+                } else {
+                  this.router.navigateByUrl('/cancel');
+                }
+              });
           } else {
             this.router.navigateByUrl('/card');
           }
@@ -125,5 +139,10 @@ export class CartComponent implements OnInit {
 
   handleCancel() {
     this.isModalVisible = false;
+  }
+
+  ngOnDestroy(): void {
+    this.componentDestroyed$.next();
+    this.componentDestroyed$.complete();
   }
 }
