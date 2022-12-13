@@ -12,22 +12,6 @@ export class ProductsEffects {
     private productService: ProductService
   ) {}
 
-  getAllProducts$ = createEffect(() =>
-    this.actions$.pipe(
-      ofType(productActions.getAllProducts),
-      exhaustMap((action) =>
-        this.productService.getAllProducts().pipe(
-          map((response) => {
-            return productActions.getAllProductsSuccess({ response });
-          }),
-          catchError((error: any) =>
-            of(productActions.getAllProductsError(error))
-          )
-        )
-      )
-    )
-  );
-
   getSelectedProducts$ = createEffect(() =>
     this.actions$.pipe(
       ofType(productActions.getSelectedProducts),
@@ -40,28 +24,6 @@ export class ProductsEffects {
             }),
             catchError((error: any) =>
               of(productActions.getSelectedProductsError(error))
-            )
-          )
-      )
-    )
-  );
-
-  getSelectedProductsBySortTypeAndLimit$ = createEffect(() =>
-    this.actions$.pipe(
-      ofType(productActions.getSelectedProductsBySortTypeAndLimit),
-      exhaustMap((action) =>
-        this.productService
-          .getSelectedProductsBySortTypeAndLimit(action.sortType, action.limit)
-          .pipe(
-            map((response) => {
-              return productActions.getSelectedProductsBySortTypeAndLimitSuccess(
-                { response }
-              );
-            }),
-            catchError((error: any) =>
-              of(
-                productActions.getSelectedProductsBySortTypeAndLimitError(error)
-              )
             )
           )
       )
