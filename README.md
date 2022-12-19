@@ -12,9 +12,9 @@
 
 - **ng-zorro-antd v14.1.1;**
 
--**rxjs v7.5.0;**
+- **rxjs v7.5.0;**
 
--**@stripe/stripe-js v1.44.1;**
+- **@stripe/stripe-js v1.44.1;**
 
 ## Features
 
