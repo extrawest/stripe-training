@@ -24,8 +24,6 @@
 - customer checkout
 -payment by credit card
 
-![Test](https://img.shields.io/badge/1-2-blueviolet)
-
 ## Demo
 
 https://stripe-5acfa.web.app/
