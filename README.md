@@ -33,13 +33,13 @@ https://stripe-5acfa.web.app/
 **1) Clone this repo to your folder:**
 
 ```
-git clone https://gitlab.extrawest.com/i-training/bohdan.horodyskyi-stripe-training.git
+git clone https://github.com/extrawest/stripe-training.git
 ```
 
 **2. Change current directory to the cloned folder:**
 
 ```
-cd bohdan.horodyskyi-stripe-training
+cd stripe-training
 ```
 
 **3) You must have installed Node.js v16.15.0 or higher. Run in terminal in root project directory:**
