@@ -1,1 +1,100 @@
-<p>cart works!</p>
+<div nz-row>
+  <nz-table #basicTable [nzData]="selectedProducts" [nzShowPagination]="false">
+    <thead>
+      <tr>
+        <th>Product</th>
+        <th>Name</th>
+        <th>Price</th>
+        <th>Quantity</th>
+        <th>Total</th>
+        <th>
+          <button
+            nz-button
+            nzType="primary"
+            nzDanger
+            (click)="removeAllProducts()"
+          >
+            Clear all
+          </button>
+        </th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let data of basicTable.data; let i = index">
+        <td>
+          <img
+            [src]="data.product.image"
+            alt=""
+            [ngStyle]="{ width: '30px' }"
+          />
+        </td>
+        <td>{{ data.product.title }}</td>
+        <td>{{ data.product.price }}</td>
+        <td>
+          <span
+            nz-icon
+            nzType="minus"
+            nzTheme="outline"
+            class="pointer"
+            (click)="minusItem(data)"
+          ></span>
+          <span>{{ data.quantity }}</span>
+          <span
+            nz-icon
+            nzType="plus"
+            nzTheme="outline"
+            class="pointer"
+            (click)="plusItem(data)"
+          ></span>
+        </td>
+        <td>{{ data.totalSum }}</td>
+        <td>
+          <span
+            (click)="removeProduct(i)"
+            nz-icon
+            nzType="close-circle"
+            nzTheme="fill"
+            class="pointer"
+            [ngStyle]="{ color: 'red', 'font-size': '20px' }"
+          ></span>
+        </td>
+      </tr>
+      <tr>
+        <td colSpan="4">
+          <button nz-button nzType="default" routerLink="/home">
+            Continue shopping
+          </button>
+        </td>
+        <td>{{ totalSum }}</td>
+        <td>
+          <button nz-button nzType="default" (click)="openModal()">
+            Proceed to checkout
+          </button>
+        </td>
+      </tr>
+    </tbody>
+  </nz-table>
+
+  <nz-modal
+    [(nzVisible)]="isModalVisible"
+    nzTitle="Card information"
+    (nzAfterOpen)="createStripeCart()"
+    (nzOnCancel)="handleCancel()"
+    (nzOnOk)="handleCancel()"
+  >
+    <ng-container *nzModalContent>
+      <div>Total sum: {{ totalSum }}</div>
+      <div *ngIf="totalSum === 0">Choose some products</div>
+      <div id="submit"></div>
+      <button
+        nz-button
+        nzSize="large"
+        [disabled]="totalSum === 0"
+        (click)="checkOut()"
+        nzBlock="true"
+      >
+        Pay
+      </button>
+    </ng-container>
+  </nz-modal>
+</div>

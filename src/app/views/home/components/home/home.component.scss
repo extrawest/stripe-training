@@ -1,0 +1,32 @@
+:host ::ng-deep .ant-menu-inline.ant-menu-root {
+  .ant-menu-submenu-title {
+    padding-left: 45px;
+    box-shadow: -1px 3px 4px 0px grey;
+  }
+  .ant-menu-submenu-arrow {
+    color: lightgray;
+  }
+}
+
+.ant-menu-horizontal {
+  box-shadow: -1px 3px 4px 0px grey;
+  margin: 20px 10px;
+}
+
+.side-menu {
+  padding: 2%;
+  height: 100%;
+  border-right: 1px solid #80808054;
+}
+
+.menu-icon {
+  width: 20px;
+  height: 20px;
+}
+
+@media screen and (min-width: 576px) and (max-width: 768px) {
+  :host ::ng-deep .ant-menu-inline.ant-menu-root .ant-menu-submenu-title {
+    padding-left: 2px !important;
+    font-size: 12px;
+  }
+}

@@ -1,1 +1,74 @@
-<p>home works!</p>
+<div nz-row>
+  <div nz-col nzSpan="24" nzSm="5" class="side-menu">
+    <ul nz-menu nzMode="inline" nzSpan="12">
+      <li nz-submenu nzTitle="CATEGORIES" nzOpen="false">
+        <ul>
+          <li
+            nz-menu-group
+            *ngFor="let category of categories"
+            [nzTitle]="category"
+            (click)="getSelectedProductsByCategory(category)"
+          ></li>
+        </ul>
+      </li>
+    </ul>
+  </div>
+  <div nz-col nzSpan="24" nzSm="19">
+    <ul nz-menu nzMode="horizontal">
+      <li nz-submenu nzTitle="Sort by" nzIcon="down" nzSpan="16">
+        <ul>
+          <li
+            nz-menu-item
+            *ngFor="let sortType of sortTypes"
+            (click)="getSelectedProductsBySortType(sortType)"
+          >
+            {{ sortType }}
+          </li>
+        </ul>
+      </li>
+      <li nz-submenu nzTitle="Show" nzIcon="down">
+        <ul>
+          <li
+            nz-menu-item
+            *ngFor="let productLimit of productLimits"
+            (click)="getSelectedProductsByLimit(productLimit)"
+          >
+            {{ productLimit }}
+          </li>
+        </ul>
+      </li>
+      <li nz-menu-item (click)="setDisplayItemsInARow(spanTypes.SPAN_24)">
+        <img
+          src="./../../../../../assets/icons/1-in-row.png"
+          class="menu-icon"
+        />
+      </li>
+      <li nz-menu-item (click)="setDisplayItemsInARow(spanTypes.SPAN_7)">
+        <img
+          src="./../../../../../assets/icons/3-in-row.png"
+          class="menu-icon"
+        />
+      </li>
+      <li nz-menu-item (click)="setDisplayItemsInARow(spanTypes.SPAN_5)">
+        <img
+          src="./../../../../../assets/icons/4-in-row.png"
+          class="menu-icon"
+        />
+      </li>
+    </ul>
+    <div
+      [ngStyle]="{ margin: '0px 0px' }"
+      nz-row
+      [ngStyle]="{ 'justify-content': 'space-between' }"
+    >
+      <app-product
+        [numberSpan]="nzSpan"
+        nz-col
+        [nzSpan]="nzSpan"
+        *ngFor="let product of products"
+        [product]="product"
+        [ngStyle]="{ width: '100%' }"
+      ></app-product>
+    </div>
+  </div>
+</div>

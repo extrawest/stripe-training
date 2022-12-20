@@ -17,7 +17,7 @@
         "build": {
           "builder": "@angular-devkit/build-angular:browser",
           "options": {
-            "outputPath": "dist/stripe-training",
+            "outputPath": "dist",
             "index": "src/index.html",
             "main": "src/main.ts",
             "polyfills": "src/polyfills.ts",
@@ -33,9 +33,17 @@
               }
             ],
             "styles": [
-              "src/theme.less",
               "src/styles.scss",
-              "node_modules/ng-zorro-antd/ng-zorro-antd.min.css"
+              {
+                "input": "src/assets/themes/ng-zorro-antd/ng-zorro-antd.scss",
+                "bundleName": "ng-zorro-antd",
+                "inject": false
+              },
+              {
+                "input": "src/assets/themes/ng-zorro-antd-dark/ng-zorro-antd-dark.scss",
+                "bundleName": "ng-zorro-antd-dark",
+                "inject": false
+              }
             ],
             "scripts": []
           },
@@ -44,8 +52,8 @@
               "budgets": [
                 {
                   "type": "initial",
-                  "maximumWarning": "500kb",
-                  "maximumError": "1mb"
+                  "maximumWarning": "4mb",
+                  "maximumError": "10mb"
                 },
                 {
                   "type": "anyComponentStyle",
