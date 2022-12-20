@@ -18,6 +18,7 @@ import { ProductsReducer } from './shared/store/products/reducers/products.reduc
 import { StoreDevtoolsModule } from '@ngrx/store-devtools';
 import { EffectsModule } from '@ngrx/effects';
 import { ProductsEffects } from './../app/shared/store/products/effects/products.effects';
+import { LocationStrategy, HashLocationStrategy} from '@angular/common';
 
 registerLocaleData(en);
 
@@ -43,7 +44,7 @@ registerLocaleData(en);
     EffectsModule,
     EffectsModule.forRoot([ProductsEffects]),
   ],
-  providers: [{ provide: NZ_I18N, useValue: en_US }],
+  providers: [{ provide: NZ_I18N, useValue: en_US }, { provide: LocationStrategy, useClass: HashLocationStrategy }],
   bootstrap: [AppComponent],
 })
 export class AppModule {}
