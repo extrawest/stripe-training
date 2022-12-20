@@ -10,7 +10,7 @@ deploy-production:
   stage: deploy
   environment: Production
   only:
-    - development
+    - master
   script:
     - npm install
     - npm run build
